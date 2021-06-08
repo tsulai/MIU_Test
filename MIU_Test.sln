@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIU_CSharp_Class", "MIU_CSharp_Class\MIU_CSharp_Class.csproj", "{256CB6B0-A701-4EEA-8405-1118C020C9BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MIU_CSharp_UnitTest", "MIU_CSharp_UnitTest\MIU_CSharp_UnitTest.csproj", "{62CF1690-D8F3-4E50-AFA3-056DA9429897}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{256CB6B0-A701-4EEA-8405-1118C020C9BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{256CB6B0-A701-4EEA-8405-1118C020C9BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{256CB6B0-A701-4EEA-8405-1118C020C9BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{256CB6B0-A701-4EEA-8405-1118C020C9BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62CF1690-D8F3-4E50-AFA3-056DA9429897}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62CF1690-D8F3-4E50-AFA3-056DA9429897}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62CF1690-D8F3-4E50-AFA3-056DA9429897}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62CF1690-D8F3-4E50-AFA3-056DA9429897}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2FE392DE-2FF5-4673-9FB3-2E94D17FCF99}
+	EndGlobalSection
+EndGlobal
