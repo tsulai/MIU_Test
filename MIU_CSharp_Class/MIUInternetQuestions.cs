@@ -8,33 +8,464 @@ namespace MIU_CSharp_Class
 {
     public class MIUInternetQuestions
     {
+        public static int areAnagrams(char[] a1, char[] a2)
+        {
+            if (a1.Length != a2.Length) return 0;
+            if (a1.Length < 1 && a2.Length < 1) return 1;
+
+            char[] a2Copy = new char[a2.Length];
+            a2Copy = a2;
+            for(int i=0; i <a1.Length; i++)
+            {
+                for(int j =0; j< a2Copy.Length; j++)
+                {
+                    if(a1[i] == a2Copy[j])
+                    {
+                        a2Copy = new string(a2Copy).Remove(j,1).ToCharArray();//remove to prevent duplicate char
+                        break;
+                    }
+                    else if(a1[i] != a2Copy[j] && j == a2Copy.Length - 1)//a1 elm not in a2
+                    {
+                        return 0;
+                    }
+                }
+            }
+            if (a2Copy.Length == 0) return 1;
+            else return 0;
+        }
+        public static int isHodder(int n)
+        {
+            if(isPrime(n) == 1)
+            {
+                int fact2 = 1;
+                while (true)
+                {
+                    fact2 *= 2;
+                    if (n == fact2 - 1) return 1;
+                    else if (fact2 - 1 > n) return 0; 
+                }
+            }
+            return 0;
+        }
+        public static int largestDifferenceOfEvens(int[] a)
+        {
+            int max = 0, min = 0, evenCount = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if(a[i]%2 == 0)
+                {
+                    evenCount++;
+                    if(evenCount == 1)//min must have actually array value first
+                    {
+                        max = a[i];
+                        min = a[i];
+                    }
+                    if (max < a[i]) max = a[i];
+                    if (a[i] < min) min = a[i];
+                }
+            }
+            if (evenCount < 2) return -1;
+            else return max - min;
+        }
+        //must b prime
+        //that prime must equal to factorial(n) + 1
+        //if n =7, 7 is prime and equal to factorial(3)+1 which is (1*2*3) + 1
+        public static int isFactorialPrime(int n)
+        {
+            if (isPrime(n) == 1)
+            {
+                int num = 1, factVal = 1;
+                while (factVal < n)
+                {
+                    for (int i = 1; i < num; i++)
+                    {
+                        factVal *= i + 1; //1*2*3
+                    }
+                    if (factVal + 1 == n) return 1;
+                    else if (factVal + 1 < n)
+                    {
+                        num++;
+                        factVal = 1;//new num, need to clear old factVal
+                    }
+                    else return 0;
+                }
+            }            
+            return 0;
+        }
+        public static int isSystematicallyIncreasing(int[] a)
+        {
+            int pointer = 0, isSysInc = 0;
+            if (a[pointer] != 1) return 0;
+            else isSysInc = 1;
+            pointer++;
+            int inc = 2;
+            while (pointer < a.Length)
+            {
+                for(int i=1; i<= inc; i++)
+                {
+                    if (a[pointer] == i) isSysInc = 1;
+                    else return 0;
+                }
+                inc++;                
+            }
+            return isSysInc;
+        }
+        public static int[] encodeArray(int n)
+        {
+            int digit, num1 = Math.Abs(n), num2 = Math.Abs(n), idx = 0, size = 0;
+            if (n == 0) return new int[] { 1 }; //if n=0, while is not working
+            while (num1 != 0)
+            {
+                digit = num1 % 10;
+                num1 /= 10;
+                size += digit + 1;// 3 = 0001, take 4 places
+            }
+            if (n < 0)
+            {
+                size += 1;
+            }
+
+            int[] encodedArr = new int[size];
+
+            if (n < 0)
+            {
+                encodedArr[idx] = -1;
+                idx++;
+            }
+            while (num2 != 0)
+            {
+                digit = num2 % 10;
+                num2 /= 10;                
+                if(digit == 0)
+                {
+                    encodedArr[idx] = 1;
+                    idx++;
+                }
+                else
+                {
+                    for (int j = 0; j <= digit; j++)
+                    {
+                        if (j == digit) encodedArr[idx] = 1;
+                        else encodedArr[idx] = 0;//place 0 as per digit times
+                        idx++;
+                    }
+                }
+                
+            }
+            return encodedArr;
+        }
+        public static int isPrimeHappy(int n)
+        {
+            if (n < 3) return 0;
+            int primeCount = 0, primeSum = 0;
+            for(int i=2; i<n; i++)
+            {
+                if(isPrime(i) == 1)
+                {
+                    primeCount++;
+                    primeSum += i;
+                }
+            }
+            if (primeCount > 1 && primeSum % n == 0) return 1;
+            else return 0;
+        }
+        //if j >= 0 and k>= 0 and
+        //j+k = length of array and (note* j,k is index no.)
+        //j!= k then a[j]+a[k] <= 10
+        // j+k = length of array means
+        // {1,2,19,4,5} - array start from 0 zero, so lenght is 4
+        //j=0 + k=4 == 4 == true, then a[0] + a[4] = 1+5 <= 10 also true, then onion array
+        public static int isOnionArray(int[] a)
+        {
+            int lowerIdx = 0, upperIdx = a.Length - 1, isOnion = 1;
+            while(lowerIdx< upperIdx)
+            {
+                if(a[lowerIdx] + a[upperIdx] <= 10)
+                {
+                    isOnion = 1;
+                }
+                else
+                {
+                    isOnion = 0;
+                    break;
+                }
+                lowerIdx++;
+                upperIdx--;
+            }
+            return isOnion;
+        }
+        // 1 = 01
+        // 2 = 001
+        // 3 = 0001
+        // 4 = 00001
+        // 5 = 000001
+        // -(negative sign) = -1  
+        // 0 = 1
+        public static int decodeArray01(int[] a)
+        {
+            int noOfZero = 0; 
+            string numStr = string.Empty;            
+            for (int i = 0 ; i< a.Length; i++)
+            {
+                if (a[i] < 0) numStr += "-";
+                if(a[i] != 0)//found 1
+                {
+                    if (noOfZero > 0)
+                    {
+                        numStr += noOfZero;
+                        noOfZero = 0;
+                    }
+                    else numStr += "0";
+                }
+                else if(a[i] == 0)
+                {
+                    noOfZero++;
+                }
+            }
+            return int.Parse(numStr);
+        }
+        //n between 1 to 9
+        public static int isDigitIncreasing(int n)
+        {
+            int sum = 0, i, j = 1;
+            while (j <= 9)
+            {
+                i = j;
+                while (true)
+                {                                    
+                    sum += i;
+                    if (sum == n) return 1;
+                    else if (sum > n)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        i = (i * 10) + j;// 1 * 10 + 1 = 111
+                        //seperate j need as to add + 1 when doing 1 + 11 + 111, +2 when 2+ 22+ 222
+                    }
+                }
+                j++;
+                sum = 0;//clear the sum again
+            }
+            return 0;
+        }
+        public static int isZeroPlentiful(int[] a)
+        {
+            if (a.Length < 1) return 0;
+            int noOfZero = 0, count = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (a[i] != 0)
+                {
+                    if (noOfZero < 4)
+                    { 
+                        noOfZero = 0; 
+                    }
+                    else
+                    {
+                        count++; 
+                        noOfZero = 0;
+                    }
+                }
+                if (a[i] == 0)
+                {
+                    noOfZero++;
+                }
+                if (i == a.Length - 1 && noOfZero >= 4) count++;//for not miss counting till end with 0
+            }            
+            return count;
+        }
+        public static int decodeArray(int[] a)
+        {
+            if (a.Length < 2) return 0;
+            string numStr = string.Empty;
+            if (a[0] < 0) numStr += "-";
+            for (int i =0; i<a.Length-1; i++)
+            {                
+                numStr += Math.Abs(a[i] - a[i + 1]);
+            }
+            return int.Parse(numStr);
+        }
+        public static int isCubePowerful(int n)
+        {
+            if (n < 1) return 0;
+            int digit, sum = 0, num = n;
+            while (num != 0)
+            {
+                digit = num % 10;
+                num /= 10;
+                sum += digit * digit * digit;
+            }
+            if (n == sum) return 1;
+            else return 0;
+        }
+        public static void doIntegrBasedRounding(int[] a, int n)
+        {
+            if(a.Length > 1 && n > 0)
+            {
+                int factor, startR, endR;
+                for(int i=0; i<a.Length; i++)
+                {
+                    factor = a[i] / n; //26/4 = 6
+                    startR = n * factor; // startRound = 4 * 6 = 24
+                    endR = n * (factor + 1); // endRound = 4 * 7 = 28
+                    //a[i] is between 24 && 28
+                    if(a[i] > 0)
+                    {
+                        if (a[i] - startR < endR - a[i])
+                        {
+                            a[i] = startR;
+                        }
+                        else if (a[i] - startR > endR - a[i])
+                        {
+                            a[i] = endR;
+                        }
+                        else
+                        {
+                            a[i] = endR;
+                        }
+                    }
+                }
+            }
+            //Console.Write(String.Join(",", a));
+        }
+        public static int matchPattern(int[] a, int[] pattern)
+        {
+            // len is the number of elements in the array a, patternLen is the number of elements in the pattern.
+            int i = 0; // index into a
+            int k = 0; // index into pattern
+            int matches = 0; // how many times current pattern character has been matched so far
+            for (i = 0; i < a.Length; i++)
+            {
+                if (a[i] == pattern[k])
+                    matches++; // current pattern character was matched
+                else if (matches == 0 || k == pattern.Length - 1)
+                    return 0; // if pattern[k] was never matched (matches==0) or at end of pattern (k==patternLen-1)
+                else // advance to next pattern character {
+                {
+                    //!!You write this code!!
+                    if (a[i] == pattern[k + 1])//when value change in a
+                    {
+                        matches++;
+                        k = k + 1;
+                    }
+                    else return 0;
+                    
+                } // end of else
+            } // end of for
+            // return 1 if at end of array a (i==len) and also at end of pattern (k==patternLen-1)
+            if (i==a.Length && k== pattern.Length-1) return 1; else return 0;
+        }
+
+        public static int?[] encodeNumber(int n)
+        {
+            if (n <= 1) return null;
+            int divider = 2, count = 0, idx = 0;
+            int?[] result = new int?[count];
+            while (n!= 1)
+            {
+                if (isPrime(divider) == 1)
+                {
+                    if (n % divider == 0)//unless can divide, it's not factor
+                    {//keep dividing the result so that it can get same factor 2*2*2*3*3
+                        n /= divider;
+                        count++;
+                        Array.Resize(ref result, count);
+                        result[idx] = divider;
+                        idx++;
+                    }
+                    else
+                    {
+                        divider++;
+                    }
+                }
+                else
+                {
+                    divider++;
+                }
+            }
+            return result;
+        }
+        public static int largestPrimeFactor(int n)
+        {
+            if (n <= 1) return 0;
+            int max = 0, divider = 2;
+            while (n != 1)
+            {
+                if(n % divider == 0)//unless it can divide, it's not factor
+                {//keep dividing the result so that it can get same factor 2*2*2*3*3
+                    n /= divider;
+                    if(isPrime(divider) == 1)
+                    {
+                        if (divider > max) max = divider;
+                    }
+                }
+                else
+                {
+                    divider++;
+                }
+            }
+            return max;
+        }
+        public static int isSequencedArray(int[] a, int m, int n)
+        {
+            if (m > n) return 0;
+            if (a[0] != m || a[a.Length - 1] != n) return 0;
+            int isSeq = 0;
+            for(int i= 1; i < a.Length - 1; i++)
+            {
+                if (a[i - 1] <= a[i] && a[i] <= a[i + 1])
+                {
+                    if(a[i] > a[i - 1])//check if only 1 greater
+                    {
+                        if (a[i] == a[i - 1] + 1) isSeq = 1;
+                        else return 0;//missing next greater num
+                    }
+
+                    if(a[i] < a[i+1])//check if only 1 lesser
+                    {
+                        if (a[i] == a[i + 1] - 1) isSeq = 1;
+                        else return 0;//missing num
+                    }
+                }
+                else return 0;
+            }
+            return isSeq;
+        }
+
         /// <summary>
+        /// **each of its digits** is concatenated twice and then summed
+        /// Note * its own digit only. e.g. 198 = 1 & 9 & 8 - 3 digits only 
         /// n is the number and catlen is the number of times to concatenate each digit before summing.
         /// </summary>
-        /// <param name="n"></param>
-        /// <param name="catlen"></param>
-        /// <returns></returns>
+        //           | digit * i   | catlen <= 2
+        //---------------------------------
+        //num = 198  | 8 * 1 = 8   |  1
+        //digit = 8  | 8 * 10 = 80 |  2   => 88
+        //---------------------------------
+        //num = 19   | 9 * 1 = 9   |  1
+        //digit = 9  | 9 * 10 = 90 |  2   => 99
+        //---------------------------------
+        //num = 0    | 1 * 1 = 1   |  1
+        //digit = 1  | 1 * 10 = 10 |  2   => 11
+
         public static int checkConcatenatedSum(int n, int catlen)
         {
-            if (n < 1 || catlen < 1) return 0;
-            int num = 1, ccNum;
-            string ccStr = string.Empty;
-           
-            while (n<10)
+            int num = n, sum = 0;
+            
+            while (num > 0)
             {
-                for (int i = 0; i < catlen; i++)
+                int digit = num % 10;
+                num /= 10;
+                for (int j = 1, i = 1; j <= catlen;j++ )
                 {
-                    ccStr += num.ToString();
+                    sum += digit * i;// 1st => 8 * 1 = 8, 2nd => 8 * 10 = 80
+                    i *= 10;
                 }
-                ccNum = int.Parse(ccStr);
-
-
-                ccNum = ccNum + ccNum;
-
-
-                num++;
             }
-            return 1;
+            if (n == sum) return 1;
+            return 0;
         }
         public static int largestAdjacentSum(int[] a)
         {
@@ -56,11 +487,8 @@ namespace MIU_CSharp_Class
         ///= 2^6 + 2^4 + 2^3
         ///get the exponent number 6,4,3
         ///extract value from a array, use exponent no. as array indexes
-        /// </summary>
-        /// <param name="a">array</param>
-        /// <param name="n">positive integer</param>
-        /// <returns></returns>
-        ///int?[] - all the return array must do null int - there is a condition to return null
+        /// </summary>        
+        ///int?[] - all the return array must do null int - as there is a condition to return null
         public static int?[] filterArray(int[] a, int n)
         {
             if (n < 1) return new int?[0];
@@ -1103,19 +1531,19 @@ namespace MIU_CSharp_Class
                 
             }
         }
+        /// <summary>
+        /// Check the number is prime or not,
+        /// accepts positive integer argument
+        /// </summary>
+        /// <param name="n">accepts positive integer argument</param>
+        /// <returns>1 or 0</returns>
         public static int isPrime(int n)
         {
             if (n < 2) return 0;          
             for (int j = 2; j <= n; j++)//divide with 2,3,4,5,..till its own number reach
             {
-                if (n == j)
-                {
-                    return 1;
-                }
-                if (n % j == 0)//can divide means no prime
-                {
-                    break;
-                }
+                if (n == j)  return 1;                
+                if (n % j == 0) break;//can divide means no prime
             }
             return 0;
         }

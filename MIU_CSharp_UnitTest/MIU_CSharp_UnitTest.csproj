@@ -90,6 +90,24 @@
     <Compile Include="MIUInternetQuestions\is121Array.cs" />
     <Compile Include="MIUInternetQuestions\filterArray.cs" />
     <Compile Include="MIUInternetQuestions\largestAdjacentSum.cs" />
+    <Compile Include="MIUInternetQuestions\checkConcatenatedSum.cs" />
+    <Compile Include="MIUInternetQuestions\isSequencedArray.cs" />
+    <Compile Include="MIUInternetQuestions\largestPrimeFactor.cs" />
+    <Compile Include="MIUInternetQuestions\encodeNumber.cs" />
+    <Compile Include="MIUInternetQuestions\doIntegrBasedRounding.cs" />
+    <Compile Include="MIUInternetQuestions\isCubePowerful.cs" />
+    <Compile Include="MIUInternetQuestions\decodeArray.cs" />
+    <Compile Include="MIUInternetQuestions\isZeroPlentiful.cs" />
+    <Compile Include="MIUInternetQuestions\isDigitIncreasing.cs" />
+    <Compile Include="MIUInternetQuestions\decodeArray01.cs" />
+    <Compile Include="MIUInternetQuestions\isOnionArray.cs" />
+    <Compile Include="MIUInternetQuestions\isPrimeHappy.cs" />
+    <Compile Include="MIUInternetQuestions\encodeArray.cs" />
+    <Compile Include="MIUInternetQuestions\isSystematicallyIncreasing.cs" />
+    <Compile Include="MIUInternetQuestions\isFactorialPrime.cs" />
+    <Compile Include="MIUInternetQuestions\largestDifferenceOfEvens.cs" />
+    <Compile Include="MIUInternetQuestions\isHodder.cs" />
+    <Compile Include="MIUInternetQuestions\areAnagrams.cs" />
     <Compile Include="MIUSample\isCentredArray.cs" />
     <Compile Include="MIUSample\subtractOddSumToEvenSum.cs" />
     <Compile Include="MIUSample\getCharArrayByStartIndexnLength.cs" />
@@ -97,6 +115,7 @@
     <Compile Include="MIUSample\subSetArray.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MIUSample\getPOEOfArray.cs" />
+    <Compile Include="MIUInternetQuestions\matchPattern.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
