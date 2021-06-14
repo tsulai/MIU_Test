@@ -6,8 +6,995 @@ using System.Threading.Tasks;
 
 namespace MIU_CSharp_Class
 {
-    public class MIUInternetQuestions
+    public  class MIUInternetQuestions
     {
+
+        //a. If it contains a 9 then it also contains a 13.
+        //b.If it contains a 7 then it does not contain a 16.
+        public static int isBean(int[] a)
+        {
+           if(Array.IndexOf(a,9) != -1)
+            {
+                if (Array.IndexOf(a, 13) == -1) return 0;
+            }
+           if(Array.IndexOf(a, 7) != -1)
+            {
+                if (Array.IndexOf(a, 16) != -1) return 0;
+            }
+            return 1;
+        }
+        //which does not contain two even numbers or two odd numbers in adjacent locations
+        //{2, 6, 3, 4} is not a wave array
+        public static int isWave(int[] a)
+        {
+            if (a.Length < 2) return 1;
+            int isWaveArr = 0;
+            for(int i=0; i<a.Length-1; i++)
+            {
+                if(a[i] % 2 == 0)
+                {
+                    if (a[i + 1] % 2 == 0) return 0;//even again
+                    else isWaveArr = 1;
+                }else
+                {
+                    if (a[i + 1] % 2 != 0) return 0;
+                    else isWaveArr = 1;
+                }
+            }
+            return isWaveArr;
+        }
+        //returns the smallest distance between two factors of a number
+        //13013 = 1*7*11*13 return 2 (13 11 = 2)
+        public static int minDistance(int n)
+        {
+            int divider = 1;
+            int diff = 0, preVfactor = 0;
+            while (divider <= n)
+            {
+                if (n % divider == 0)
+                {
+                    if (preVfactor == 0) preVfactor = divider;
+                    else
+                    {
+                        if (diff == 0)
+                        {
+                            diff = divider - preVfactor;
+                            preVfactor = divider;
+                        }
+                        else if (divider - preVfactor < diff)
+                        { 
+                            diff = divider - preVfactor;
+                            preVfactor = divider;
+                        }
+                    }
+                }
+                divider++;
+            }
+            return diff;
+        }
+        //It returns an integer array arr2 of length n whose first k elements are the same as the first k elements of arr, and whose remaining elements consist of repeating blocks
+        //fill({1,2,3,5, 9, 12,2,1}, 3, 10) returns {1,2,3,1,2,3,1,2,3,1}.
+        public static int?[] fill(int[] arr, int k, int n)
+        {
+            if (k < 1 || n < 1) return null;
+            int?[] arr2 = new int?[n] ;
+            int idx = 0;
+            for (int i = 0; i < n; i++)
+            {                
+                arr2[i] = arr[idx];
+                idx++;
+                if (idx == k) idx = 0;            
+            }
+            return arr2;
+        }
+        //hasKSmallFactors(7, 30) is true (since 5*6 = 30 and 5 < 7, 6 < 7).
+        public static bool hasKSmallFactors(int k, int n)
+        {
+            if (k < 0 || n < 0) return false;
+            int divider = 2;
+            while (divider <= n)
+            {
+                if(n % divider == 0)
+                {
+                    if (divider < k && n / divider < k) return true;
+                }
+                divider++;
+            }
+            return false;
+        }
+        //An array with an odd number of elements is said to be centered if all elements (except the middle one) are strictly greater than the value of the middle element
+        //{5, 3, 3, 4, 5} is not a centered array (the middle element 3 is not strictly less than all other elements)
+        public static int isCentered(int[] a)
+        {
+            if (a.Length < 1) return 0;
+            if (a.Length % 2 == 0) return 0;
+            
+            int isCentered = 0;
+            int lowerIndex = 0;
+            int upperIndex = 0;
+            int centerVal = 0;
+            
+            lowerIndex = (a.Length - 1) / 2;
+            upperIndex = lowerIndex;
+
+            while (lowerIndex >= 0 && upperIndex < a.Length)
+            {
+                if (lowerIndex == upperIndex)
+                {
+                    centerVal = a[lowerIndex];
+                    isCentered = 1;
+                }
+                else if (a[lowerIndex] <= centerVal || a[upperIndex] <= centerVal) return 0;
+                else isCentered = 1;
+
+                lowerIndex--;
+                upperIndex++;
+            }
+            return isCentered;
+            }
+
+        //its even numbered elements (a[0], a[2], etc.) are even and its odd numbered elements(a[1], a[3], etc.) are odd.
+        public static int isBalanced2(int[] a)
+        {
+            for(int i = 0; i<a.Length; i++)
+            {
+                if(i % 2 == 0)
+                {
+                    if (a[i] % 2 != 0) return 0;
+                }
+                else
+                {
+                    if (a[i] % 2 == 0) return 0;
+                }
+            }
+            return 1;
+        }
+        //a positive integer that is the product of exactly two primes greater than 1.
+        // 22 = 2 * 11, both 2 and 11 are primes
+        public static int isPrimeProduct(int n)
+        {
+            int p1 = 2, p2 = 2, product;
+            while(p1 <= n)
+            {
+                if(isPrime(p1) == 1)
+                {
+                    p2 = 2;//one p1 increase, p2 need to start from beginning, as it maintain its previous value
+                    while (p2 <= n)
+                    {
+                        if (isPrime(p1) == 1)
+                        {
+                            product = p1 * p2;
+                            if (product == n) return 1;
+                        }
+                        p2++;  
+                    }
+                }
+                p1++;               
+            }
+            return 0;
+        }
+        //a. The array contains even numbers (*** NOT must only even)
+        //b.Let min be the smallest even number in the array.
+        //c.Let max be the largest even number in the array.
+        //d.min does not equal max
+        //e. All numbers between min and max are in the array
+        public static int isComplete2(int[] a)
+        {
+            int? min = null, max = null, count = 0;
+            int isComp = 0;
+            bool hasEven = false;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (a[i] % 2 == 0)//even
+                {
+                    hasEven = true; 
+                    if (max == null)
+                    {
+                        max = a[i];
+                        min = max;
+                    } else {
+                        if (a[i] > max) max = a[i];
+                        if (a[i] < min) min = a[i];
+                    }                                     
+                }
+            }
+            if(hasEven && min != max)
+            {
+                count = max - min;
+                for (int j=1; j<count; j++)
+                {
+                    if (Array.IndexOf(a, min + j) == -1) return 0;
+                    else isComp = 1;
+                }
+            }
+            return isComp;            
+        }
+        //if the sum of the primes in the array is equal to the first element of the array.If there are no primes in the array, the first element must be 0.
+        public static int isMagicArray(int[] a)
+        {
+            int sum = 0;
+            bool hasPrime = false;
+            for(int i=0; i<a.Length; i++)
+            {
+                if(isPrime(a[i]) == 1)
+                {
+                    sum += a[i];
+                    hasPrime = true;
+                }
+            }
+            if(hasPrime)
+            {
+                if (sum == a[0]) return 1;
+                else return 0;
+            }
+            else
+            {
+                if (a[0] == 0) return 1;
+                else return 0;
+            }
+        }
+        //all digit must even
+        public static int isEvens(int n)
+        {
+            int digit;
+            while (n != 0)
+            {
+                digit = n % 10;
+                if (digit % 2 != 0) return 0;
+                n /= 10;
+            }
+            return 1;
+        }
+        //an array where for every value n in the array, n also is in the array
+        //{-2,3, 2, -3}is a balanced array.So is {-2,2, 2, 2}.
+        public static int isBalanced(int[] a)
+        {
+            int opposite = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (a[i] > 0) opposite = a[i] * -1;
+                else if (a[i] < 0) opposite = Math.Abs(a[i]);
+                if(Array.IndexOf(a, opposite) == -1)
+                    return 0;
+                
+            }
+            return 1;
+        }
+        //A Fine array is defined to be an array in which every prime in the array has its twin in the array
+        public static int isFineArray(int[] a)
+        {
+            int twinP = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (isPrime(a[i]) == 1)
+                {
+                    if (isPrime(a[i] + 2) == 1 || isPrime(a[i] - 2) == 1)
+                    {
+                        twinP = a[i]+2;
+                    }
+                }
+            }
+            if (twinP != 0)
+            {
+                if (Array.IndexOf(a, twinP) != -1) return 1;
+                else return 0;
+            }
+            else//no prime
+                return 1;
+            
+        }
+
+        //returns 1 if sum of all digits of the first argument is less than the second argument and 0 otherwise
+        //isDigitSum(32121,10 ) would return 1
+        //because 3+2+1+2+1 = 9 < 10.
+        public static int  isDigitSum(int n, int m)
+        {
+            if (n < 0 || m < 0) return -1;
+            int digit, sum = 0;
+            while(n != 0)
+            {
+                digit = n % 10;
+                n /= 10;
+                sum += digit;
+            }
+            if (sum < m) return 1;
+            else return 0;
+        }
+        //a. If it contains 9 then it also contains 11.
+        //b.If it contains 7 then it does not contain 13.
+        public static int isFilter(int[] a)
+        {
+            if (a.Length < 1) return 0;
+            for(int i =0; i<a.Length; i++)
+            {
+                if (a[i] == 9)
+                {
+                    if (Array.IndexOf(a, 11) == -1)//if no 11
+                        return 0;
+                }
+                if(a[i] == 7)
+                {
+                    if (Array.IndexOf(a, 13) != -1)//if has 13
+                        return 0;
+                }
+            }
+            return 1;
+        }
+        //be one that has no odd factors, except for 1 and possibly itself.
+        public static int isNormal(int n)
+        {
+            int divider = 2;
+            while (divider < n)
+            {
+                if (n % divider == 0)
+                {
+                    if (divider % 2 != 0) return 0;//odd
+                }
+                divider++;
+            }
+            return 1;
+        }
+        //a. It contains a value that occurs more than once
+        //b.It contains an odd number
+        public static int isOddValent(int[] a)
+        {
+            int isMore = 0, hasOdd = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if(Array.IndexOf(a, a[i]) != i && Array.IndexOf(a, a[i]) != -1)
+                {
+                    isMore = 1;
+                }
+                if (a[i] % 2 != 0) hasOdd = 1;
+            }
+            if (isMore == 1 && hasOdd == 1) return 1;
+            else return 0;
+        }
+        //an array that contains either all odd numbers or all even numbers
+        public static int isDaphne(int[] a)
+        {
+            if (a.Length < 1) return 0;
+            bool isEven; int isDph = 0;
+            if (a[0] % 2 == 0) isEven = true;
+            else isEven = false;
+            for (int i=0; i<a.Length; i++)
+            {                
+               if(isEven)
+                {
+                    if (a[i] % 2 == 0) isDph = 1;
+                    else return 0;
+                }
+               else
+                {
+                    if (a[i] % 2 != 0) isDph = 1;
+                    else return 0;
+                }   
+            }
+            return isDph;
+        }
+        //countOnes(5) returns 2 because binary 101 equals 5
+        public static int countOnes(int n)
+        {
+            if (n < 1) return 0;
+            int digit, count = 0;
+            while(n !=0)
+            {
+                digit = n % 2;
+                n /= 2;
+                if (digit == 1) count++;
+            }
+            return count; 
+        }
+        //-1 = -1 * -1 * -1
+        //1 = 1 * 1 * 1
+        //-8 = -2 * -2 * -2
+        public static int isCubePerfect(int[] a)
+        {
+            if (a.Length < 1) return 1;
+            int n, cube, isCube = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                n = 0; cube = 0;
+                while(n <= Math.Abs(a[i]))
+                {
+                    cube = n * n * n;
+                    if (cube == a[i])
+                    {
+                        isCube = 1;
+                        break;
+                    }
+                    n++;
+                }
+                if (cube == Math.Abs(a[i])) isCube = 1;
+                else return 0;
+            }           
+            return isCube;
+        }
+        //a[3*n+1] == 0 && the rest must not 0
+        //a[3*0+1]= a[1] == 0
+        //a[3*1+1] = a[4] ==0
+        //a[3*2+1] = a[7] == 0
+        //a[3*3+1] = a[10] == 0
+        //the rest must 0 a[0], a[2], a[3], a[5] ...
+        public static int isZeroLimited(int[] a)
+        {
+            if (a.Length < 1) return 1;
+            int isZLmt = 0; bool isCond1 = false;
+            for(int i=0; i<a.Length; i++)
+            {
+                for(int j = 0; j<a.Length; j++)
+                {
+                    if (i == 3 * j + 1)
+                    {
+                        if (a[i] == 0)
+                        {
+                            isZLmt = 1;
+                            isCond1 = true;
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        isCond1 = false;
+                    }
+                }
+                if (!isCond1)
+                {
+                    if (a[i] == 0) return 0;
+                    else isZLmt = 1;
+                }
+                
+            }
+            return isZLmt;
+        }
+        //whose cube contains exactly four 6’s.
+        //806 is a BEQ number because 806*806*806 = 523,606,616 which has four 6’s
+        public static int findSmallestBEQnumber()
+        {
+            int n = 2, cube = 0, digit, count6 = 0;
+            while (true)
+            {
+                cube = n * n * n;
+
+                while(cube != 0)
+                {
+                    digit = cube % 10;
+                    cube /= 10;
+                    if (digit == 6) count6++;
+                }
+                if (count6 >= 4) 
+                    return n;
+                else count6 = 0;
+                n++;                
+            }
+        }
+        //its elements sum to 0 and for each positive element n, there exists another element that is the negative of n
+        //{3, 4, -2, -3, -2} 0 because even though this sums to 0, there is no element whose value is -4
+        public static int isZeroBalanced(int[] a)
+        {
+            if (a.Length < 1) return 0;
+            int sum = 0, opposite = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                sum += a[i];
+                if (a[i] > 0) opposite = a[i] * -1;// if +, need to find - value
+                else if (a[i] < 0) opposite = Math.Abs(a[i]);// if - , find + same value
+                if (Array.IndexOf(a, opposite) == -1) return 0;
+            }
+            if (sum == 0) return 1;
+            else return 0;
+        }
+        //5 yes, 5 is prime, 5+2 is prime
+        //7 yes, 7 is prime, 7-2 is prime
+        public static int isTwinPrime(int n)
+        {
+            if (n < 2) return 0;
+            int isTP = 0;
+            if(isPrime(n) == 1)
+            {
+                if(isPrime(n+2) == 1 || isPrime(n-2) == 1)
+                {
+                    isTP = 1;
+                }else
+                {
+                    isTP = 0;
+                }
+            }
+            return isTP;
+        }
+        //24 = 2*3*4 and 3 = 2 + 1
+        //there have two factors which are consecutive
+        public static int isConsectiveFactored(int n)
+        {
+            if (n < 1) return 0;
+            int divider = 2, factor1 = 0, factor2 = 0;
+            while (divider <= n)
+            {
+                if (n % divider == 0)
+                {
+                    if (factor1 == 0) factor1 = divider;
+                    else
+                    {
+                        factor2 = divider;
+                        if (factor2 == factor1 + 1) return 1;
+                        else
+                        {
+                            factor1 = factor2;
+                            factor2 = 0;
+                        }
+                    }
+                }
+                divider++;
+            }
+            return 0;
+
+        }
+        //if it contains 3 or more zeros in the middle that are preceded and followed by the same number of non-zero elements
+        public static int isHollow(int[] a)
+        {
+            int isCentered = 0;
+            int lowerIndex = 0;
+            int upperIndex = 0;
+            int count = 0;
+            bool aftNonZero = false;
+            //[0],[1],[2],[3],[4],[5]
+            //{a,b,c,d,e,f}
+            //lowerIndex = (6/2) - 1 = 2 <- 2 is the index number which is a[2]=c 
+            //NOT start counting from 1, 2, 3 ... of array elements.
+            if (a.Length % 2 == 0)
+            {
+                lowerIndex = (a.Length / 2) - 1;
+                upperIndex = a.Length / 2;
+            }
+            //since array start from 0, odd Length can get exact middle index by dividing (length -1)/2
+            //{0,1,2,3,4,5,6,7}
+            // start from middle <<= lowerIndex -- && upperIndex ++ =>>
+            else
+            {
+                lowerIndex = (a.Length - 1) / 2;
+                upperIndex = lowerIndex;
+            }
+            while (lowerIndex >= 0 && upperIndex < a.Length)
+            {
+                if (a[lowerIndex] == 0 && a[upperIndex] == 0)
+                {
+                    if (aftNonZero) return 0;
+                    else
+                    {
+                        if (lowerIndex == upperIndex) count++;
+                        else count += 2;
+                        isCentered = 1;
+                    }
+                    
+                }
+                else if (a[lowerIndex] != 0 && a[upperIndex] == 0) return 0;
+                else if (a[lowerIndex] == 0 && a[upperIndex] != 0) return 0;
+                else if (a[lowerIndex] != 0 && a[upperIndex] != 0) aftNonZero = true;
+
+                lowerIndex--;
+                upperIndex++;
+            }
+            if (isCentered == 1 && count >= 3) return 1;
+            else return 0;
+        }
+        //adds a given number of miles to the array
+        //the mileage counter is "backwards" in the array, a[0] represents ones, a[1] represents tens, a[2] represents hundreds, etc.
+        //{8, 9, 9, 5, 0} + 1 = {9, 9, 9, 5, 0}
+        //{9,9,9,9,9} + 13 = {2,1,0,0,0}
+        public static void updateMileagecounter(int[] a, int miles)
+        {
+            if (miles < 0) return;
+            for (int m = 1; m <= miles; m++)
+            {
+                a = addOneMile(a);
+            }
+
+            //int[] result = new int[a.Length];
+            //result = a;
+        }
+        public static int[] addOneMile(int[] a)
+        {
+            int add = 0, carry = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                add = a[i] + 1 + carry;
+                if (add >= 10)
+                {
+                    a[i] = 0;
+                    if (add % 10 != 0) carry = add % 10;
+                    else carry = 0;
+                }
+                else
+                {//if not more than 10, no carry sum for next array elm
+                    a[i] = add;
+                    break;
+                }
+            }
+            return a;
+        }
+        //elements are in ascending order and each element appears two or more times
+        //{1, 1, 2, 2, 2, 3, 3} is layered but {1, 2, 2, 2, 3, 3} is not
+        public static int isLayered(int[] a)
+        {
+            if (a.Length < 2) return 0;
+            bool isSorted = false; int appear = 1;
+            for (int i = 1; i < a.Length; i++)            {
+
+                if (a[i - 1] != a[i])//vale changed
+                {
+                    if (appear < 2) return 0;
+                    if (a[i - 1] > a[i]) return 0;
+                    isSorted = true;
+                    appear = 1;
+                }
+                else if (a[i - 1] == a[i])
+                {
+                    appear++;
+                    isSorted = true;
+                }
+            }
+            if (isSorted) return 1;
+            else return 0;
+        }
+        //if it contains all numbers between 0 and a.length-1 inclusive
+        //{1, 2, 0, 3} => 1
+        public static int isAllPossibilities(int[] a)
+        {
+            if (a.Length < 1) return 0;
+            int isPossible = 0;
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] >= 0 && a[i] <= a.Length - 1) isPossible = 1;
+                else return 0;
+            }
+            return isPossible;
+        }
+        //polynomial {0, 1, 2, 3, 4}, x = 1
+        //4x^4 + 3x^3 + 2x^2 + x^1 + 0x^0 
+        //=10.0
+        public static double eval(double x, int[] a)
+        {
+            double sum = 0, xTimes = 1;
+            for(int i = 0; i<a.Length; i++)
+            {//i = 0, x^0 = 1
+                //i = 2, x^2 = x*x
+                for(int j=0; j<i; j++)
+                {
+                    xTimes *= x;
+                }
+                sum += (a[i] * xTimes);
+                xTimes = 1;//need to clear for next number times calculation
+            }
+            return sum;
+        }
+
+        //if they have the same number of factors
+        //6 & 21, 6 has 4 factors(1,2,3,6), 21 has 4 factors(1,3,7,21)
+        public static int sameNumberOfFactors(int n1, int n2)
+        {
+            if (n1 < 0 || n2 < 0) return 0;
+            if (n1 == n2) return 1;
+            if (numOfFactors(n1) == numOfFactors(n2)) return 1;
+            else return 0;
+        }
+        public static int numOfFactors(int n)
+        {
+            int divider = 1, count = 0;
+            while(divider <= n)
+            {
+                if (n % divider == 0) count++;
+                divider++;
+            }
+            return count;
+        }
+        //all the elements of the array are one of n different values
+        //{1, 1, 1, 8, 1, 1, 1, 3, 3} - 3 differnt values inside array 1,3,8
+        public static int hasNValues(int[] a, int n)
+        {
+            int?[] resultArr = new int?[n];
+            int idx = 0;            
+            for(int i=0; i<a.Length; i++)
+            {
+                if(Array.IndexOf(resultArr,a[i]) == -1)
+                {
+                    if(idx < n)
+                    {
+                        resultArr[idx] = a[i];
+                        idx++;
+                    }
+                    else//more diff val than n 
+                    {
+                        return 0;
+                    }
+                    
+                }
+            }
+            if (idx == n) return 1;
+            else return 0;
+        }
+        public static int allValuesTheSame(int[] a)
+        {
+            if (a.Length < 1) return 0;
+            int isSame = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (a[i] != a[0]) return 0;
+                else if (a[i] == a[0]) isSame = 1;
+            }
+            if (isSame == 1) return 1;
+            else return 0;
+        }
+        //If n is greater than the number of elements in the array, the function loops back to the beginning
+        //of the array and continues summing until it has summed n elements
+        public static int loopSum(int[] a, int n)
+        {
+            if (a.Length < 1 || n < 1) return 0;
+            int sum = 0, loop, num = n;
+            if (num % a.Length == 0) loop = num / a.Length; 
+            else loop = num / a.Length + 1;//7/3 = 2 mod 1 - need 3 round loop
+            for(int i = 1; i<= loop; i++)
+            {
+                for (int j = 0; j < a.Length && num > 0; j++, num--)//after one sum - reduce n count;
+                {
+                    sum += a[j];
+                }
+            }
+            return sum;
+        }
+        //contains an even element, a perfect square and two different elements that sum to 8.
+        //{3, 2, 9, 5} is complete because 2 is even, 9 is a perfect square and a[0] + a[3] = 8.
+        public static int isComplete(int[] a)
+        {
+            if (a.Length < 2) return 0;
+            bool isEven = false, isSq = false, is8 = false;
+            for(int i = 0; i<a.Length-1; i++)
+            {
+                if (a[i] % 2 == 0) isEven = true;
+                if (a[i] != 1 && isPerfectSquare(a[i]) == 1) isSq = true;//question assume 1 is not perfect square
+                if (!is8) { 
+                for(int j = 1; j<a.Length; j++)
+                    {
+                        if (a[i] + a[j] == 8)
+                        {
+                            is8 = true;
+                            break;
+                        }
+                    }
+                }
+                if (isEven && isSq && is8) return 1;
+            }
+            if (isEven && isSq && is8) return 1;
+            else return 0;
+        }
+        //an array with an even number of elements as a parameter and
+        //returns an array that
+        //contains the pairwise sums of the elements of its parameter array.
+        //{2, 1, 18, -5} return {3, 13}
+        public static int?[] pairwiseSum(int[] a)
+        {
+            if (a.Length < 2 || a.Length % 2 != 0) return null;
+            int?[] resultArr = new int?[a.Length / 2];
+            int idx = 0;
+            for(int i= 0; i<a.Length; i= i + 2)
+            {
+                resultArr[idx] = a[i] + a[i + 1];
+                idx++;
+            }
+            return resultArr;
+        }
+        //{5, 15, 27}, n = 2
+        //5+2=7 is prime, and 15+2=17 is prime, and 27+2=29 is prime
+        public static int isNPrimeable(int[] a, int n)
+        {
+            if(a.Length < 1)
+            {
+                if (isPrime(n) == 1) return 1;
+                else return 0;
+            }
+            for(int i=0; i<a.Length; i++)
+            {
+                if (isPrime(a[i] + n) != 1) return 0;
+            }
+            return 1;
+        }
+        //{1, 4, 1, 4, 5, 6}
+        //a[2] + a[3] == 5 and 2+3==5.
+        //the sum of the values is equal to the sum of
+        //the corresponding indexes and both are equal to n (5 in this case).
+        public static int isPairedN(int[] a, int n)
+        {
+            if (a.Length < 2) return 0;
+            if (n < 0) return 0;
+            for(int i = 0; i<a.Length-1; i++)
+            {
+                for(int j=1; j<a.Length; j++)
+                {
+                    if(a[i]+a[j] == n)
+                    {
+                        if (i + j == n)
+                            return 1;
+                    }
+                }
+            }
+            return 0;
+        }
+        public static int isMartian(int[] a)
+        {
+            int count1 = 0, count2 = 0;
+            for(int i= 0; i<a.Length; i++)
+            {
+                if (a[i] == 1) count1++;
+                else if (a[i] == 2) count2++;
+                if (i != a.Length -1 && a[i] == a[i + 1]) return 0;                
+            }
+            if (count1 > count2) return 1;
+            else return 0;
+        }
+        public static int[] computeHMS(int seconds)
+        {
+            if (seconds < 0) return new int[] { 0, 0, 0 };
+            int[] hmsArr = new int[3];
+            hmsArr[0] = seconds / 3600;
+            hmsArr[1] = (seconds % 3600) / 60;
+            hmsArr[2] = seconds % 60;
+
+            return hmsArr;
+        }
+        //{2, 3, 4, 5, 6, 7, 8, 9, 10}, length = 9
+        //2 divisible => 2,4,6,8,10 => 5 counts
+        //3 divisible => 3,6,9 => 3 counts
+        //5 divisible => 5,10 => 2 counts
+        //not divisible by 2,3,5 => 7 => 1 counts
+        // 5 + 3 + 2 + 1 = 11
+        // 11 != 9 (length) 
+        //not 235 array
+        public static int is235Array(int[] a)
+        {
+            int div2Count = 0, div3Count = 0, div5Count = 0, nonDivCount = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (a[i] % 2 == 0) div2Count++;
+                if (a[i] % 3 == 0) div3Count++;//use 'if' again as 6 is divisible by both 2 and 3
+                if (a[i] % 5 == 0) div5Count++;//with else if, only either one work
+                if(a[i]%2 != 0 && a[i]%3 != 0 && a[i]%5 !=0) nonDivCount++;
+            }
+            if (a.Length == div2Count + div3Count + div5Count + nonDivCount) return 1;
+            else return 0;
+        }
+        //array if a 3 does not occur between any two 1s
+        public static int isMercurial(int[] a)
+        {
+            if (a.Length < 1) return 1;
+            int? found3Idx = null, found1Lower = null, found1Upper = null;
+            int isMercu = 0;
+            for (int i=0; i<a.Length; i++)
+            {
+                if (a[i] == 3)
+                {
+                    found3Idx = i; 
+                }
+                else if (a[i] == 1)
+                {
+                    if (found1Lower == null)
+                        found1Lower = i;
+                    else if (found1Lower != null && found1Upper == null)
+                        found1Upper = i;
+                    else if (found1Lower != null && found1Upper != null)
+                        found1Upper = i;
+                }
+                if(found3Idx != null)
+                {
+                    //1,1, is in front of 3 or behind 3
+                    if (found1Upper == null || found3Idx < found1Lower && found3Idx < found1Upper || found3Idx > found1Lower && found3Idx > found1Upper)
+                        isMercu = 1;
+                    else                        
+                        return 0;  //no more checking whether rule is valid more
+                }
+                
+            }
+            if (found3Idx == null || found1Upper == null) isMercu = 1;  //3 not in betn;
+
+            return isMercu;
+        }
+        //n = 1+2+3+4+ ... j
+        public static int isTriangular(int n)
+        {
+            int sum = 0;
+            for(int i= 1; i<= n; i++)
+            {
+                sum += i;
+                if (sum == n) return 1;
+                else if (sum > n) return 0;
+            }
+            return 0;
+        }
+        public static int isFibonacci(int n)
+        {
+            int fbn1 = 1, fbn2 = 1, nextFbn = 0;
+            for (int i = 3; i <= n; i++)//count is 1 by 1
+            {
+                nextFbn = fbn1 + fbn2;
+
+                if (nextFbn == n) return 1;
+                else if (nextFbn < n)
+                {
+                    fbn1 = fbn2;
+                    fbn2 = nextFbn;
+                }
+                else
+                    return 0;
+                
+            }
+            return 0;
+        }
+        //one-balanced if begins with zero or more 1s followed by zero or more non-1s and
+        //concludes with zero or more 1s
+        //meaning is not 0 or 1, how many number of one(1) inside array, that must same with how many number of non 1
+        //and conclude with 1 or without 1(zero number of 1)
+        public static int isOneBalanced(int[] a)
+        {
+            if (a.Length < 1) return 1;
+            int oneCount = 0, nOneCount = 0;
+            for(int i= 0;i<a.Length; i++)
+            {
+                if(a[i] != 1)
+                {
+                    nOneCount++;
+                }else if(a[i] == 1)
+                {
+                    if(oneCount > 0)
+                    {
+                        if (i == a.Length - 1)//last elm, last item chk should come first to avoid index out of bound for i+1 chk case
+                            oneCount++;
+                        else if (a[i - 1] == 1 || a[i + 1] == 1)//have siblings
+                            oneCount++;                        
+                        else
+                            return 0;//another seq start
+                    }
+                    else
+                    {
+                        oneCount++;
+                    }
+                    
+                }
+            }
+            if (nOneCount == oneCount) return 1;
+            else return 0;
+        }
+
+        // 50 = (25+25) || (1+49) = vesuvian
+        //must be different square pair
+        // (1*1) + (7*7)
+        public static int isVesuvian(int n)
+        {
+            int i = 1, sum = 0;
+            while (i<n)
+            {
+                for(int j = 1; j <= n; j++){
+                    if(i != j)
+                    {
+                        sum = (i * i) + (j * j);
+                    }
+                    if (sum == n) return 1;
+                    else if (sum > n) break;
+                }
+                i++;             
+            }
+            return 0;
+        }
+        public static int closestFibonacci(int n)
+        {
+            int fbn1 = 1, fbn2 = 1, nextFbn = 0;
+            for(int i=3; i<=n; i++)//count is 1 by 1
+            {
+                nextFbn = fbn1 + fbn2;
+                
+                if (nextFbn > n) return fbn2;//it reach faster
+                fbn1 = fbn2;
+                fbn2 = nextFbn;
+            }
+            return nextFbn;
+        }
         public static int areAnagrams(char[] a1, char[] a2)
         {
             if (a1.Length != a2.Length) return 0;
@@ -467,6 +1454,7 @@ namespace MIU_CSharp_Class
             if (n == sum) return 1;
             return 0;
         }
+        //{1, 2, 3, 4} = 7 because 3+4 is larger than either 1+2 or 2+3
         public static int largestAdjacentSum(int[] a)
         {
             int largest = 0;
@@ -646,7 +1634,7 @@ namespace MIU_CSharp_Class
             }
             return 1;
         }
-        //n = 9 to base 2
+        //n = 9 to base 2 (binary representation)
         //Base 2  | Quotient | Remainder
         //=================================
         // 9/2    |   4      | 1
@@ -1142,6 +2130,7 @@ namespace MIU_CSharp_Class
         }
         public static int isSquare(int n)
         {
+            if (n < 0) return 0;
             for(int i=0; i<=n; i++)
             {
                 if(i*i == n)
@@ -1565,6 +2554,7 @@ namespace MIU_CSharp_Class
             }
             return count;
         }
+        //isPerfectSquare(4) returns 1 and isPerfectSquare(8) returns 0
         public static int isPerfectSquare(int n)
         {
             int root = (int)Math.Floor(Math.Sqrt(n));
@@ -1655,90 +2645,7 @@ namespace MIU_CSharp_Class
             }
             return 1;
 
-        }
-        public static int isMadhavArray_Hubby(int[] a)
-        {
-            // prerequisite check.
-            if (a == null || a.Length == 0 || a.Length < 3)
-                return 0;
-
-            bool isMad = false;
-            int idx = 0; // to know maximum array pairs. 
-                         // E.g. [0] = [1]+[2] is 2 array pairs.
-                         // [0] = [1]+[2] = [3]+[4]+[5] is 3 array pairs.
-                         // [0] = [1]+[2] = [3]+[4]+[5] = [6]+[7]+[8]+[9] is 4 array pairs.
-
-            // check Madhav Array with n*(n+1)/2
-            for (int i = 2; i <= a.Length; i++)
-            {
-                if (a.Length == i * (i + 1) / 2)
-                {
-                    isMad = true;
-                    idx = i; // record maximum array pair count.
-                    i = a.Length + 1; // to exit from for loop checking
-                }
-            }
-
-            if (isMad == false) // array is not Madhav
-                return 0; 
-
-            int firstarraystart = 0; // to record first array start index
-            int secondarraystart = 0; // to record second array start index
-
-            // loop array and get sum of pair count to check array is Madhav array
-            for (int i = 0; i < idx-1; i++)
-            {
-                int firstsum = 0;
-                int secondsum = 0;
-
-                for (int j = firstarraystart; j < firstarraystart + i + 1; j++)
-                {
-                    firstsum = firstsum + a[j];
-                    secondarraystart = j + 1;
-                }
-
-                firstarraystart = secondarraystart;
-                for (int j = secondarraystart; j < secondarraystart + (i + 2); j++)
-                {
-                    secondsum = secondsum + a[j];
-                }
-
-                if (firstsum != secondsum)
-                    return 0;
-            }
-
-            #region reverse checking
-            /*
-            int firstarraystart = a.Length-1; // to do reverse count
-            int secondarraystart =0;
-            // loop array pair count to check Madhav proporty
-            for (int i= idx; i>1; i--)
-            {
-                int firstsum =0;
-                int secondsum =0;
-                
-                for(int j= firstarraystart; j > firstarraystart - i; j--)
-                {
-                    firstsum = firstsum + a[j];
-                    secondarraystart = j-1;
-                }
-                firstarraystart = secondarraystart;
-                for (int j = secondarraystart; j > secondarraystart -(i-1); j--)
-                {
-                    secondsum = secondsum + a[j];
-                }
-
-                if (firstsum != secondsum)
-                    return 0;
-            }
-            */
-            #endregion
-
-            // all negative checking is passed. Therefore, this is a Madhav array
-            return 1;
-
-        }
-
+        }       
         public static int primeCount(int start, int end)
         {
             int count = 0;
