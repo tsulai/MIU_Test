@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MIUExam\checkConcatenatedSum.cs" />
     <Compile Include="MIUInternetQuestions\NextPerfectSquare.cs" />
     <Compile Include="MIUInternetQuestions\NUpCount.cs" />
     <Compile Include="MIUInternetQuestions\primeCount.cs" />
@@ -202,6 +203,7 @@
       <Name>MIU_CSharp_Class</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
