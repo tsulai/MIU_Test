@@ -8,7 +8,508 @@ namespace MIU_CSharp_Class
 {
     public  class MIUInternetQuestions
     {
+        //which outputs true if the sum of the elements in the input array arr is a power of 2, false otherwise
+        //sumIsPower({8,8,8,8}) is true since 8 + 8 + 8 + 8 = 32 = 25. sumIsPower({8,8,8}) is false, since 8 + 8 +8 = 24, not a power of 2.
+        public static bool sumIsPower(int[] arr)
+        {
+            if (arr == null) return false;
+            int sum = 0;
+            for(int i=0; i<arr.Length; i++)
+            {
+                sum += arr[i];
+            }
+            return (sum != 0) && ((sum & (sum - 1)) == 0);
+            //https://stackoverflow.com/questions/600293/how-to-check-if-a-number-is-a-power-of-2
 
+        }
+        //the sum of the integers from 1 to j for some j.
+        //6 = 1+2+3
+        public static int isPascal(int n)
+        {
+            return isTriangular(n);
+        }
+
+        //an array where a[n] is less than n for n = 0 to a.length1.
+        //{4,0, 1, 0, 2} is a Meera array because
+        //a[0] < 0
+        //a[1] < 1
+        //a[2] < 2
+        //a[3] < 3
+        //a[4] < 4
+        //{1,0, 0, 8, 0} is not a Meera array because a[3] is 8 which is not less than 3.
+        public static int isMeera5(int[] a)
+        {
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (a[i] >= i) return 0;
+            }
+            return 1;
+        }
+        //sums the digits of its integer argument. For example sumDigits(3114) returns 9, sumDigits(6543)returns 18 and sumDigits(0) returns 0.
+        public static int sumDigits(int n)
+        {
+            int digit, sum = 0, num = Math.Abs(n);
+            while (num != 0)
+            {
+                digit = num % 10;
+                num /= 10;
+                sum += digit;
+            }
+            return sum;
+        }
+    // returns 1 if no value in its array argument occurs more than 3 times in the array.
+    // goodSpread(new int[] {2, 1, 2, 5, 2, 1, 5, 9} returns 1 because no value occurs more than three times.
+    //goodSpread(new int[] {3, 1, 3 ,1, 3, 5, 5, 3} ) returns 0 because the value 3 occurs four times.
+        public static int goodSpread(int[] a)
+        {
+            int count, result = 0;
+            foreach(int i in a)
+            {
+                count = 0;
+                foreach(int j in a)
+                {
+                    if (i == j)
+                        count++;
+                }
+                if (count > 3) return 0;
+                else result = 1;
+            }
+            return result;
+        }
+        //an array that contains at least one odd number and begins and ends with the same number of even numbers.
+        //{4, 8, 6, 3, 2, 9, 8,11, 8, 13, 12, 12, 6} is a Daphne array because it begins with three even
+        //numbers and ends with three even numbers and it contains at least one odd number
+        public static int isDaphne2(int[] a)
+        {
+            int lowerIndex = 0;
+            int upperIndex = a.Length - 1;
+            int lowerEvenCount = 0, upperEvenCount = 0;
+            bool hasOdd = false;
+
+            while(lowerIndex <= upperIndex && upperIndex >= lowerIndex)
+            {
+                if (a[lowerIndex] % 2 != 0 || a[upperIndex] % 2 != 0)
+                    hasOdd = true;
+                if(a[lowerIndex] % 2 == 0)
+                {
+                    lowerEvenCount++;
+                }
+                if (a[upperIndex] % 2 == 0)
+                {
+                    upperEvenCount++;
+                }
+                lowerIndex++;
+                upperIndex--;
+            }
+            if (hasOdd)
+            {
+                if (lowerEvenCount == upperEvenCount) return 1;
+                else return 0;
+            }
+            else
+                return 0;
+        }
+        //returns the number of times that 2 divides the argument.
+        //factorTwoCount(48) returns 4 because
+        //48/2 = 24
+        //24/2 = 12
+        //12/2 = 6
+        //6/2 = 3
+        //2 does not divide 3 evenly.
+        public static int factorTwoCount(int n)
+        {
+            int num = n, count = 0;
+            while(num > 2)
+            {
+                if (num % 2 == 0)
+                {
+                    count++;
+                    num /= 2;
+                }
+                else
+                    break;
+            }
+            return count; 
+        }
+        //if it has an even number of elements and each pair of consecutive even and odd elements sum to the same value.
+        //{1, 2, 3, 0} is a dual array(because 1+2 = 3+0 = 3)
+        //{1, 2, 1} is not a dual array(because array does not have an even number of elements)
+        public static int isDual2(int[] a)
+        {
+            if (a.Length % 2 != 0) return 0;
+            if (a.Length < 1) return 1;
+            int firstSum = a[0] + a[1], result = 0;
+            for(int i = 2; i<a.Length; i = i+2) //i+2 because pair sum
+            {
+                if (i != a.Length - 1)
+                {
+                    if (a[i] + a[i + 1] != firstSum) return 0;
+                    else result = 1;
+                }                
+            }
+            return result;
+        }
+        //***use foreach for counting more than one number in same array
+        //to be an array where every value occurs exactly twice.
+        //arrays are not Dual arrays
+        //{2, 5, 2, 5, 5} (5 occurs three times instead of two times)
+        //{3, 1, 1, 2, 2} (3 occurs once instead of two times)
+        public static int isDual(int[] a)
+        {
+            int result = 0, count = 0;
+            foreach(int i in a)            {
+                count = 0; //when another item change
+                foreach(int j in a)
+                {
+                    if (i == j) count++;
+                }
+                if (count != 2) return 0;
+                else result = 1;
+            }
+            return result;
+        }
+        //if it is an element in the infinite sequence 1, 2, 4, 7,11, 16, 22, … 
+        //    Note that 2-1=1, 4-2=2, 7-4=3, 11-7=4, 16-11=5 
+        //    so for k>1, the kth element of the sequence is equal to the k1th element + k1
+        //same as isSmart at line 195
+        public static int isBunker2(int n)
+        {
+            return isSmart(n);
+        }
+        //for every value n in the array, there is also an element 2n, 2n+1 or n/2 in the array.
+        //{4, 9, 8},{2, 2, 5, 11, 23}, {7, 7, 3, 6} and {0} are bean array
+        //{3, 8, 4} is not a Bean array because of the value 3 which requires that the array contains either the value 6, 7
+        public static int isBean3(int[] a)
+        {
+            int result = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if(Array.IndexOf(a, 2*a[i]) != -1 || Array.IndexOf(a, (2 * a[i]) +1 ) != -1 || Array.IndexOf(a, a[i]/2) != -1)
+                {
+                    result = 1;
+                }else
+                {
+                    return 0;
+                }
+            }
+            return result;
+        }
+        //an array that contains the value 1 if and only if it contains 9.
+        //is a Meera array because it contains no 1 and also contains no 9
+        public static int isMeera4(int[] a)
+        {
+            int result = 1;
+            if (Array.IndexOf(a, 1) != -1)
+            {
+                if (Array.IndexOf(a, 9) == -1) return 0;
+                else result = 1;
+            }
+            if (Array.IndexOf(a, 9) != -1)
+            {
+                if (Array.IndexOf(a, 1) == -1) return 0;
+                else result = 1;
+            }
+            return result;
+        }
+        //a number in the sequence 1, 1, 5, 17, 61, … .Note that first two fancy numbers are 1 and any fancy number other than the first two is sum of the three times previous one and two times the one before that
+        //1,
+        //1,
+        //3*1 +2*1 = 5
+        //3*5 +2*1 = 17
+        //3*17 + 2*5 = 61
+        public static int isFancy(int n)
+        {
+            if (n == 1) return 1;
+            int num1 = 1, num2 = 1, nextFcy = 0;
+            while (nextFcy <= n)
+            {
+                nextFcy = 3 * num2 + 2 * num1;
+                if (nextFcy == n) return 1;
+                if(nextFcy < n)
+                {
+                    num1 = num2;
+                    num2 = nextFcy;
+                    nextFcy = 0;
+                }
+            }
+            return 0;
+        }
+
+        //an array where for every value n in the array, there is also an element n-1 or n+1 in the         array.
+        //same as isNice at line 215
+        public static int isBean2(int[] a)
+        {
+            return isNice(a);
+        }
+
+        //an array that contains the value 0 if and only if it contains a prime number
+        //{7, 6, 10} is not a Meera array because it contains a prime number (7) but does not contain a 0. The array {6, 10, 0} is not a Meera array because it contains a 0 but does not contain a prime number.
+        //to check eithere hasPrime and hasZero
+        public static int isMeera3(int[] a)
+        {
+            int result = 1;
+            bool hasPrime = false;
+            for(int i=0;i<a.Length; i++)
+            {
+                if(isPrime(a[i]) == 1)
+                {
+                    hasPrime = true;
+                    if (Array.IndexOf(a, 0) == -1) return 0;
+                }                
+            }
+            if (Array.IndexOf(a, 0) != -1)
+            {
+                if (!hasPrime) return 0;
+                else result = 1;
+            }
+            return result;
+        }
+
+        //a Triple array to be an array where every value occurs exactly three times.
+        //{3, 1, 2, 1, 3, 1, 3, 2, 2} is a Triple array.
+        public static int isTriple(int[] a)
+        {
+            int count = 0;
+            foreach(int i in a)
+            {
+                count = 0;
+                foreach(int j in a)
+                {
+                    if (i == j) count++;
+                }
+                if (count != 3) return 0;
+            }            
+            return 1;
+        }
+        //(a) a[i] is less than i for i = 0 to a.length1.
+        //(b) sum of all elements of a is 0.
+        public static int isMeera2(int[] a)
+        {
+            int sum = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (a[i] >= i) return 0;
+                sum += a[i];
+            }
+            if (sum == 0) return 1;
+            else return 0;
+        }
+        //if they have the same number of factors
+        public static int factorEqual(int n, int m)
+        {
+            return sameNumberOfFactors(n, m);
+        }
+        //if all its elements are greater than 0 and all even numbers that are less than the maximum even number are in the array.
+        //{2, 3, 2, 4, 11, 6, 10, 9, 8} is complete
+        //a. all its elements are greater than 0
+        //b.the maximum even integer is 10
+        //c.all even numbers that are less than 10 (2, 4, 6, 8) are in the array.
+        public static int isComplete3(int[] a)
+        {            
+            int max = 0, evenNum = 2, result = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (a[i] < 1) return 0;
+                if (a[i] % 2== 0)
+                {    
+                    if (a[i] > max) max = a[i];
+                }
+            }
+            while(evenNum < max)
+            {
+                if (Array.IndexOf(a, evenNum) == -1) return 0;
+                else result = 1;
+
+                evenNum = evenNum + 2;
+            }
+            return result;
+        }
+        //if the sum of the primes in the array is equal to the first element of the array.
+        //If there are no primes in the array, the first element must be 0
+        public static int isNiceArray(int[] a)
+        {
+            int? primeSum = null;
+            int isNice = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (i == 0) primeSum = 0;
+                if(isPrime(a[i]) == 1)
+                {
+                    primeSum += a[i];
+                }
+            }
+            if(primeSum!= null)
+            {
+                if (primeSum == a[0]) isNice = 1;
+                else isNice = 0;
+            }else
+            {
+                if(a[0] == 0) isNice = 1;
+                else isNice = 0;
+            }
+            return isNice;
+        }
+
+        //if it is an element in the infinite sequence 1, 2, 4, 7, 11, 16 …
+        //Note that 2-1= 1, 4-2=2, 7-4=3, 11-7=4, 16-11=5
+        //[1][2][3][4][5][6] <= indexes
+        // 1, 2, 4, 7, 11, 16
+        //if want 16 => prevNo + (index -1);
+        public static int isSmart(int n)
+        {
+            if (n < 1) return 0;
+            int seq = 1;
+            for(int i = 1; i < n; i++)
+            {
+                seq += (i - 1);
+                if (seq == n) return 1;
+                else if (seq > n) return 0; 
+            }
+            return 1;
+        }
+        //if every element in one is also in the other and viceversa.
+        //{1, 9, 12}, {12, 1, 9}, {9, 1, 12, 1}, {1,9, 12, 9, 12, 1, 9}
+        public static int isSetEqual(int[] a, int[] b)
+        {
+            if (a.Length < 1 && b.Length < 1) return 1;
+            bool aGood = false, bGood = false;
+            for(int i=0; i<a.Length; i++)
+            {
+                if (Array.IndexOf(b, a[i]) != -1)
+                    aGood = true;
+                else
+                    return 0;
+            }
+            for (int i = 0; i < b.Length; i++)
+            {
+                if (Array.IndexOf(a, b[i]) != -1)
+                    bGood = true;
+                else
+                    return 0;
+            }
+            if (aGood && bGood) return 1;
+            else return 0;
+        }
+        //A twin array is defined to an array  which every prime that has a twin appear with a twin
+        //{5, 3, 14, 7, 18, 67}. // 3 and 5 are twins, 5 and 7 are twins, 67 has no twin
+        public static int isTwin(int[] arr)
+        {
+            int result = 0;
+            for(int i=0; i<arr.Length; i++)
+            {
+                if(isPrime(arr[i]) == 1)
+                {
+                    if (isPrime(arr[i] + 2) == 1 || isPrime(arr[i] - 2) == 1)
+                    {//need to chk isPrime again as 13 + 2 = 15 and 15 is in array and is not prime
+                        if (isPrime(arr[i] + 2) == 1 && Array.IndexOf(arr, arr[i] + 2) != -1 || isPrime(arr[i] - 2) == 1 && Array.IndexOf(arr, arr[i] - 2) != -1)
+                            result = 1;
+                        else
+                            return 0;
+                    }
+                    else//no twin prime
+                    {
+                        result = 1;
+                    }
+                       
+                }
+            }
+            return result;
+        }
+        //if it can be expressed as the product of two or more continuous integers greater than 1.
+        //6 = 2 * 3.
+        //60 = 3 * 4 * 5
+        //120 = 4 * 5 * 6
+        public static int isContinuousFactored(int n)
+        {
+            int nextFactor, product = 1;            
+            for(int i = 2; i<= n; i++)
+            {
+                nextFactor = i + 1;
+                product = i; // 60 = 3 *
+                while (nextFactor <= n)
+                {
+                    product *= nextFactor;// 60 = 3 * 4 
+                    if (product == n) return 1;
+                    else if (product > n) break;
+                    nextFactor++;
+                }
+            }
+            return 0;
+        }
+        //an array where for every value n in the array, there is also an element n - 1 or n+1 in the array.
+        public static int isNice(int[] a)
+        {
+            int isNce = 0;
+            for(int i=0; i<a.Length; i++)
+            {                
+                if (Array.IndexOf(a, a[i] + 1) != -1 || Array.IndexOf(a, a[i] - 1) != -1)
+                    isNce = 1;
+                else
+                    return 0;
+            }
+            return isNce;
+        }
+        //an array that contains the value 1 if and only if it contains a prime number
+        public static int isBunker(int[] a)
+        {
+            if (Array.IndexOf(a, 1) == -1) return 0;//no 1 value
+            for(int i=0; i<a.Length; i++)
+            {
+                if (isPrime(a[i]) == 1) return 1;
+            }
+            return 0;
+        }
+        //nontrivial factor is a factor other than 1 and the number 
+        public static int isMeeraNumber(int n)
+        {
+            if (n < 4) return 0;
+            int count = 0;
+
+            for (int i = 2;i < n; i++)//find all factors except 1 and own no. (called nontrivial factors)
+            {
+                if (n % i == 0) count++;//count all the number
+            }
+            if (n % count == 0) return 1;//chk if count no. is also the factor of n
+            else return 0;
+          
+        }
+        //for all values n in the array, the value 2*n is not in the array.So {3, 5, 2} is a Meera array because 3*2, 5*2 and 2*2 are not in the array
+        public static int isMeera(int[] a)
+        {
+            for (int i = 0; i<a.Length; i++)
+            {
+                if (Array.IndexOf(a, a[i] * 2) != -1) return 0;
+            }
+            return 1;
+        }
+        //at least one odd number is immediately followed by a prime number.So
+        //{4, 9, 6, 7, 3} is a Bunker array
+        public static int isBunkerArray(int[] a)
+        {
+            int isBk = 0;
+            for(int i=0; i<a.Length; i++)
+            {
+                if(a[i] % 2 != 0)//odd
+                {
+                    if (i != a.Length -1 && isPrime(a[i + 1]) == 1) return 1;//prime
+                }
+            }
+            return isBk;
+        }
+
+        //returns the number of times that a given digit appears in a positive number.For example countDigit(32121, 1) would return 2
+        public static int countDigit(int n, int digit)
+        {
+            if (n < 0 || digit < 0) return -1;
+            int val = 0, count = 0;
+            while (n != 0)
+            {
+                val = n % 10;
+                n /= 10;
+                if (val == digit) count++;
+            }
+            return count;
+        }
         //a. If it contains a 9 then it also contains a 13.
         //b.If it contains a 7 then it does not contain a 16.
         public static int isBean(int[] a)
@@ -896,6 +1397,9 @@ namespace MIU_CSharp_Class
 
             return isMercu;
         }
+        //the sum of the integers from 1 to j for some j.
+        // 6 is a Pascal number because 6 = 1 + 2 + 3. Here j is 3. 
+        // Another Pascal number is 15 because 15 = 1 + 2 + 3 + 4 + 5
         //n = 1+2+3+4+ ... j
         public static int isTriangular(int n)
         {
@@ -1571,6 +2075,9 @@ namespace MIU_CSharp_Class
             }
             return count;
         }
+        //if it contains at least one odd element and every odd element is greater than every even lement.
+        //So {11, 4, 9, 2, 8} is oddheavy because the two odd elements(11 and 9) are greater than all the even elements.
+        //And {11, 4, 9, 2, 3, 10} is not odd - heavy because the even element 10 is greater than the odd element 9.
         public static int isOddHeavy(int[] a)
         {
             if (a == null || a.Length < 1) return 0;
