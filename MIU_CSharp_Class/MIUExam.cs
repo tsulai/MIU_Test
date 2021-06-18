@@ -32,8 +32,8 @@ namespace MIU_CSharp_Class
             for (int i = 0; i < a.Length; i++)
             {
                 if (a[i] % 2 == 0) div2Count++;
-                if (a[i] % 3 == 0) div3Count++;//use 'if' again as 6 is divisible by both 2 and 3
-                if (a[i] % 5 == 0) div5Count++;//with else if, only either one work
+                if (a[i] % 3 == 0) div3Count++;
+                if (a[i] % 5 == 0) div5Count++;
                 if (a[i] % 2 != 0 && a[i] % 3 != 0 && a[i] % 5 != 0) nonDivCount++;
             }
             if (a.Length == div2Count + div3Count + div5Count + nonDivCount) return 1;
