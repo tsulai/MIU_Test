@@ -50,6 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MIUExam\checkConcatenatedSum.cs" />
+    <Compile Include="MIUExam\closestFibonacci.cs" />
+    <Compile Include="MIUExam\is235Array.cs" />
+    <Compile Include="MIUExam\isSelfReferential.cs" />
     <Compile Include="MIUInternetQuestions\NextPerfectSquare.cs" />
     <Compile Include="MIUInternetQuestions\NUpCount.cs" />
     <Compile Include="MIUInternetQuestions\primeCount.cs" />
