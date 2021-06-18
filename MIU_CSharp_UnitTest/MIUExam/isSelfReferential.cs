@@ -15,12 +15,12 @@ namespace MIU_CSharp_UnitTest.MIUExam
             Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 1 }), 0, "TEST 4");
 
             Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 2,0,2,0}), 1, "TEST 5");
-            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 2, 0, 2, 0 }), 1, "TEST 5");
-            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 2, 1, 2, 0, 0 }), 1, "TEST 5");
-            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 3, 2, 1, 1, 0, 0, 0 }), 1, "TEST 5");
-            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 4, 2, 1, 0, 1, 0, 0, 0 }), 1, "TEST 5");
-            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 5, 2, 1, 0, 0, 1, 0, 0, 0 }), 1, "TEST 5");
-            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 6, 2, 1, 0, 0, 0, 1, 0, 0, 0 }), 1, "TEST 5");
+            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 2, 0, 2, 0 }), 1, "TEST 6");
+            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 2, 1, 2, 0, 0 }), 1, "TEST 7");
+            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 3, 2, 1, 1, 0, 0, 0 }), 1, "TEST 8");
+            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 4, 2, 1, 0, 1, 0, 0, 0 }), 1, "TEST 9");
+            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 5, 2, 1, 0, 0, 1, 0, 0, 0 }), 1, "TEST 10");
+            Assert.AreEqual(MIU_CSharp_Class.MIUExam.isSelfReferential(new int[] { 6, 2, 1, 0, 0, 0, 1, 0, 0, 0 }), 1, "TEST 11");
         }
     }
 }
